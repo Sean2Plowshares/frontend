@@ -3,6 +3,7 @@ var webpack = require('webpack')
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     'webpack-dev-server/client?http://0.0.0.0:3000',
     'webpack/hot/only-dev-server',
     './src/index.js'
@@ -28,7 +29,23 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel'
+      },
+      {
+        test: /\.css$/,
+        loaders: [
+          'style-loader',
+          'css-loader?modules&importLoaders=1',
+          'postcss-loader'
+        ]
       }
+    ]
+  },
+
+  postcss: function() {
+    return [
+      require('precss'),
+      require('autoprefixer'),
+      require('lost'),
     ]
   },
 
